@@ -30,7 +30,16 @@
             ?>
             
             
-
+            
+            <!-- Page sidebar, to be shown only for parent-child relationship page  -->
+            <?php 
+            $childPages = get_pages(array(
+                'child_of' => get_the_ID()
+            ));
+            // $parentId being true means this is a child page
+            // $childPages being true means this is a parent page with child pages
+            // If its not a parent or a child, aka a regular page, than don't show this section
+            if($parentId or $childPages) { ?>
             <div class="page-links">
                 <h2 class="page-links__title">
                     <a href="<?php echo get_permalink($parentId); ?>"><?php echo get_the_title($parentId); ?></a>
@@ -44,14 +53,16 @@
                         } else {
                             $idToUse = get_the_ID();
                         }
-                        $wp_list_pages_args = array(
+                        wp_list_pages(array(
                             'title_li' => NULL,
-                            'child_of' => $idToUse
-                        );
-                        wp_list_pages($wp_list_pages_args);
+                            'child_of' => $idToUse,
+                            'sort_column' => 'menu_order'
+                        ));
                     ?>
                 </ul>
             </div>
+            <?php } ?>
+            <!-- End Page Sidebar  -->
 
             <div class="generic-content">
                 <?php the_content()?>
