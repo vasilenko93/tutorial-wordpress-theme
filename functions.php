@@ -10,6 +10,9 @@ function theme_wp_enqueue_scripts_style() {
 
 function theme_features() {
     add_theme_support('title-tag');
+    register_nav_menu('header-menu-location', 'Header Menu Location');
+    register_nav_menu('footer-location-1', 'Footer Menu Column 1');
+    register_nav_menu('footer-location-2', 'Footer Menu Column 2');
 }
 
 add_action("wp_enqueue_scripts", "theme_wp_enqueue_scripts_style");
